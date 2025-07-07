@@ -7,17 +7,21 @@ import authRouter from "./routes/auth.routes.js";
 import subscriptionRouter from "./routes/subscription.router.js";
 import connectToDatabase from "./database/mongodb.js";
 import errorMiddleware from "./middlewares/error.middleware.js";
+import arcjetMiddleware from "./middlewares/arcjet.middleware.js";
 
 const app = express();
 
+// Order of middlewares matters, make sure to register middlewares before routes
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(arcjetMiddleware);
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/subscriptions", subscriptionRouter);
 
+// Regsiter the error middleware after registering the routes
 app.use(errorMiddleware);
 
 app.get("/", (req, res) => {
