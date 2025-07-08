@@ -28,7 +28,7 @@ const subscriptionSchema = new mongoose.Schema(
       enum: ["sports", "news", "entertainment", "lifestyle", "technology", "finance", "politics", "other"],
       required: true,
     },
-    payment: {
+    paymentMethod: {
       type: String,
       required: true,
       trim: true,
@@ -48,7 +48,6 @@ const subscriptionSchema = new mongoose.Schema(
     },
     renewalDate: {
       type: Date,
-      required: true,
       validate: {
         validator: (value) => value > this.startDate,
         message: "Renewal date must be after the start date",
